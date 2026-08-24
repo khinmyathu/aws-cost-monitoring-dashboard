@@ -1,4 +1,4 @@
-INSERT INTO monitor.t_aws_account (account_id, account_name, ins_dttm, up_dttm, up_empcd) 
+INSERT INTO monitor.m_aws_account (account_id, account_name, ins_dttm, up_dttm, up_empcd) 
 VALUES ('123456789012', 'Production-Account', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM')
 ON CONFLICT (account_id) DO NOTHING;
 

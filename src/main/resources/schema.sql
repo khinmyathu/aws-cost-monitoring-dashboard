@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS monitor;
 
 -- 2. テーブル作成 (存在しない場合のみ)
-CREATE TABLE IF NOT EXISTS monitor.t_aws_account (
+CREATE TABLE IF NOT EXISTS monitor.m_aws_account (
     account_id VARCHAR(64) PRIMARY KEY,
     account_name VARCHAR(255),
     ins_dttm TIMESTAMP,
