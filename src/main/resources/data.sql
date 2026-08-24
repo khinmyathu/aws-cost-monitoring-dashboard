@@ -1,6 +1,6 @@
 INSERT INTO monitor.t_aws_account (account_id, account_name) 
-VALUES ('123456789012', 'Production-Account') 
-ON CONFLICT DO NOTHING;
+VALUES ('123456789012', 'Production-Account')
+ON CONFLICT (account_id) DO NOTHING;
 
 INSERT INTO monitor.t_resource_inventory (resource_id, account_id, resource_name, service_code, status)
 VALUES ('res-ec2-001', '123456789012', 'Web-Server-EC2', 'AmazonEC2', 'RUNNING')
