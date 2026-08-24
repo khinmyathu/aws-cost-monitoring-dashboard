@@ -10,11 +10,6 @@ spring:
 
   sql:
     init:
-      mode: always # 起動時にschema.sqlを実行する
-
-spring:
-  sql:
-    init:
       mode: always
 
   jpa:
@@ -22,4 +17,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    defer-datasource-initialization: true # Hibernateのテーブル作成完了後にdata.sqlを実行する
+    defer-datasource-initialization: true # ★ここを追加！(JPAのテーブル生成後にdata.sqlを実行する)
+    properties:
+      hibernate:
+        format_sql: true
