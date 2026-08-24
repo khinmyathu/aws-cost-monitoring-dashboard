@@ -1,20 +1,19 @@
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/cloud_monitor_db
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/cloud_monitor_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      # 今回はすでにSQLでテーブル作成済みのため、Spring側での自動生成は無効化(none)します
       ddl-auto: none
     properties:
       hibernate:
         format_sql: true
-        # 対象のスキーマを 'monitor' に指定します
         default_schema: monitor
