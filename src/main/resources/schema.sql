@@ -18,9 +18,6 @@ CREATE TABLE IF NOT EXISTS monitor.m_aws_account
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS monitor.m_aws_account
-    OWNER to postgres;
-
 COMMENT ON TABLE monitor.m_aws_account
     IS 'アカウントマスタ';
 
@@ -58,9 +55,6 @@ CREATE TABLE IF NOT EXISTS monitor.m_aws_service
 )
 
 TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS monitor.m_aws_service
-    OWNER to postgres;
 
 COMMENT ON TABLE monitor.m_aws_service
     IS 'サービスマスタ';
@@ -105,9 +99,6 @@ CREATE TABLE IF NOT EXISTS monitor.t_cost_alert
 )
 
 TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS monitor.t_cost_alert
-    OWNER to postgres;
 
 COMMENT ON TABLE monitor.t_cost_alert
     IS 'コストアラート履歴';
@@ -172,9 +163,6 @@ CREATE TABLE IF NOT EXISTS monitor.t_cost_budget
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS monitor.t_cost_budget
-    OWNER to postgres;
-
 COMMENT ON TABLE monitor.t_cost_budget
     IS 'コスト予算設定';
 
@@ -237,9 +225,6 @@ CREATE TABLE IF NOT EXISTS monitor.t_daily_cost
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS monitor.t_daily_cost
-    OWNER to postgres;
-
 COMMENT ON TABLE monitor.t_daily_cost
     IS '日別コスト実績';
 
@@ -292,9 +277,6 @@ CREATE TABLE IF NOT EXISTS monitor.t_resource_inventory
 )
 
 TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS monitor.t_resource_inventory
-    OWNER to postgres;
 
 COMMENT ON TABLE monitor.t_resource_inventory
     IS 'リソースインベントリ情報';
