@@ -23,7 +23,6 @@ ON CONFLICT (resource_id) DO NOTHING;
 --------------------------------------------------
 -- 3. 日次コストの拡充（グラフをカラフルにするため複数サービスを登録）
 --------------------------------------------------
--- ※idが自動採番(SERIAL/IDENTITY)であることを前提にid列は省略しています。
 INSERT INTO monitor.t_daily_cost 
 (id, account_id, service_code, target_date, cost_amount_jpy, cost_amount_usd, ins_dttm, up_dttm, up_empcd) 
 VALUES 
@@ -31,7 +30,9 @@ VALUES
 (2, '123456789012', 'AmazonRDS', CURRENT_DATE, 7500, 50.20, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
 (3, '123456789012', 'AmazonS3', CURRENT_DATE, 1200, 8.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
 (4, '123456789012', 'AWSLambda', CURRENT_DATE, 300, 2.10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
-(5, '987654321098', 'AmazonEC2', CURRENT_DATE, 800, 5.40, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM');
+(5, '987654321098', 'AmazonEC2', CURRENT_DATE, 800, 5.40, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM')
+ON CONFLICT (id) DO NOTHING;
+
 --------------------------------------------------
 -- 4. 予算データの拡充
 --------------------------------------------------
@@ -39,7 +40,8 @@ INSERT INTO monitor.t_cost_budget
 (id, account_id, budget_name, period_type, budget_amount, currency, start_date, end_date, warning_threshold, critical_threshold, ins_dttm, up_dttm, up_empcd) 
 VALUES 
 (1, '123456789012', '本番環境 全体予算', 'MONTHLY', 1000.00, 'USD', '2026-08-01', '2026-08-31', 80.0, 95.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
-(2, '987654321098', '開発環境 抑制予算', 'MONTHLY', 200.00, 'USD', '2026-08-01', '2026-08-31', 70.0, 90.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM');
+(2, '987654321098', '開発環境 抑制予算', 'MONTHLY', 200.00, 'USD', '2026-08-01', '2026-08-31', 70.0, 90.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM')
+ON CONFLICT (id) DO NOTHING;
 
 --------------------------------------------------
 -- 5. アラートデータの拡充 (OPENとRESOLVEDを混在)
@@ -49,4 +51,5 @@ INSERT INTO monitor.t_cost_alert
 VALUES 
 (1, '123456789012', 'AmazonRDS', 'BUDGET_EXCEEDED', 400.00, 420.50, 'OPEN', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
 (2, '987654321098', 'AmazonEC2', 'ANOMALY_DETECTION', 10.00, 25.00, 'OPEN', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
-(3, '123456789012', 'AWSLambda', 'BUDGET_EXCEEDED', 5.00, 6.20, 'RESOLVED', CURRENT_TIMESTAMP - INTERVAL '2 days', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM');
+(3, '123456789012', 'AWSLambda', 'BUDGET_EXCEEDED', 5.00, 6.20, 'RESOLVED', CURRENT_TIMESTAMP - INTERVAL '2 days', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM')
+ON CONFLICT (id) DO NOTHING;
