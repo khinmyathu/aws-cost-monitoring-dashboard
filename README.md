@@ -24,6 +24,20 @@ AWS環境のクラウドリソースと利用コストを可視化・管理す�
 * **[x] v1.0:** フルスタック MVP 開発とホスティング環境での公開
 * **[ ] v2.0:** AWS ネイティブ環境へのインフラ移行 (S3/CloudFront, ECS/App Runner, RDS)
 * **[ ] v2.1:** AWS Cost Explorer API を用いたデータ取得の自動化
+## 🔌 画面構成とAPI仕様 (UI to API Mapping)
+
+フロントエンドの各UIコンポーネントと、バックエンド（Spring Boot）の REST API エンドポイントの連携仕様です。
+実務での運用を見据え、コンポーネントごとに必要なデータのみを取得するよう設計しています。
+
+| UIコンポーネント (画面) | HTTP | APIエンドポイント | 主な取得・更新データ |
+| :--- | :--- | :--- | :--- |
+| **サービス別 日次コスト**<br>(棒グラフ) / **コスト割合** (円グラフ) | `GET` | `/api/v1/daily-costs` | `serviceCode` (サービス名)<br>`costAmountUsd` (コスト額) |
+| **AWSアカウント** (リスト) | `GET` | `/api/v1/accounts` | `accountId` (アカウントID)<br>`accountName` (アカウント名) |
+| **月間コスト予算** (リスト) | `GET` | `/api/v1/budgets` | `budgetName` (予算名)<br>`budgetAmount` (予算額)<br>`warningThreshold` (警告閾値) |
+| **アラート** (リスト) | `GET` | `/api/v1/alerts?status=OPEN` | `serviceCode` (対象サービス)<br>`actualValue` (実績値)<br>`thresholdValue` (閾値) |
+| **確認済みにする** (ボタン) | `PUT` | `/api/v1/alerts/{id}/resolve` | `status` を "RESOLVED" に更新し、未確認一覧から除外 |
+| **リソース詳細一覧** (テーブル) | `GET` | `/api/v1/resource-inventories` | `resourceName` (リソース名)<br>`serviceCode` (サービス)<br>`region` (リージョン)<br>`status` (ステータス) |
+
 * 
 ## データベース設計（ER図）
 本プロジェクトのデータベースはPostgreSQLを使用し、以下の設計としています。
