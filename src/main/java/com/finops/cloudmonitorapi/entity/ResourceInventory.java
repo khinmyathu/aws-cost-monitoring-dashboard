@@ -1,11 +1,10 @@
 package com.finops.cloudmonitorapi.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "t_resource_inventory", schema = "monitor")
 public class ResourceInventory {
@@ -23,6 +22,15 @@ public class ResourceInventory {
     @Column(name = "resource_name")
     private String resourceName;
 
+    @Column(name = "resource_arn")
+    private String resourceArn;
+
+    @Column(name = "resource_type")
+    private String resourceType;
+
+    @Column(name = "region")
+    private String region;
+
     @Column(name = "status")
     private String status;
 
@@ -32,37 +40,9 @@ public class ResourceInventory {
     @Column(name = "ins_dttm")
     private LocalDateTime insDttm;
 
-    @Column(name = "up_empcd")
-    private String upEmpcd;
-
     @Column(name = "up_dttm")
     private LocalDateTime upDttm;
 
-    // --- 以下、GetterとSetter ---
-    public String getResourceId() { return resourceId; }
-    public void setResourceId(String resourceId) { this.resourceId = resourceId; }
-
-    public String getAccountId() { return accountId; }
-    public void setAccountId(String accountId) { this.accountId = accountId; }
-
-    public String getServiceCode() { return serviceCode; }
-    public void setServiceCode(String serviceCode) { this.serviceCode = serviceCode; }
-
-    public String getResourceName() { return resourceName; }
-    public void setResourceName(String resourceName) { this.resourceName = resourceName; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    public LocalDateTime getLastCheckedDttm() { return lastCheckedDttm; }
-    public void setLastCheckedDttm(LocalDateTime lastCheckedDttm) { this.lastCheckedDttm = lastCheckedDttm; }
-
-    public LocalDateTime getInsDttm() { return insDttm; }
-    public void setInsDttm(LocalDateTime insDttm) { this.insDttm = insDttm; }
-
-    public String getUpEmpcd() { return upEmpcd; }
-    public void setUpEmpcd(String upEmpcd) { this.upEmpcd = upEmpcd; }
-
-    public LocalDateTime getUpDttm() { return upDttm; }
-    public void setUpDttm(LocalDateTime upDttm) { this.upDttm = upDttm; }
+    @Column(name = "up_empcd")
+    private String upEmpcd;
 }
