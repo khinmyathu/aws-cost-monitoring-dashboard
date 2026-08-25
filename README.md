@@ -6,7 +6,7 @@ AWS環境のクラウドリソースと利用コストを可視化・管理す�
 現在は MVP (v1.0) として、フルスタック環境（React + Spring Boot + PostgreSQL）を構築し、ホスティングサービス上で公開しています。
 
 ## 📸 スクリーンショット
-<img width="507" height="571" alt="Image" src="https://github.com/user-attachments/assets/823b0e79-fcbd-43a8-ab7a-60602a4cbb73" />
+<img width="933" height="1283" alt="Image" src="https://github.com/user-attachments/assets/3340edb6-5793-4ec8-a72a-2f80ce9e1725" />
 
 ## 技術スタック (v1.0)
 * **フロントエンド:** React, Vite, Recharts (Vercel にてホスティング)
