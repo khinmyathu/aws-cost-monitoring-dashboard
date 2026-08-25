@@ -1,9 +1,32 @@
 # aws-cost-monitoring-dashboard
 AWS Cost and Resource Monitoring Dashboard (Spring Boot 3 / Python / PostgreSQL)
+# AWS Cost Monitoring Dashboard (FinOps)
+
+AWS環境のクラウドリソースと利用コストを可視化・管理するためのダッシュボードアプリケーションです。
+現在は MVP (v1.0) として、フルスタック環境（React + Spring Boot + PostgreSQL）を構築し、ホスティングサービス上で公開しています。
+
+## 📸 スクリーンショット
+![FinOps Dashboard](ここに画像リンクを貼り付けます)
+
+## 技術スタック (v1.0)
+* **フロントエンド:** React, Vite, Recharts (Vercel にてホスティング)
+* **バックエンド:** Java, Spring Boot, JPA (Render にてホスティング)
+* **データベース:** PostgreSQL (Render Managed DB)
+* **バージョン管理:** Git, GitHub
+
+## 主な機能
+* **コスト可視化:** サービス別のコスト一覧と割合をグラフで直感的に表示。
+* **予算管理:** アカウントやサービスごとの月間予算と警告閾値のモニタリング。
+* **アラート検知:** 予算超過の兆候を検知し、未確認アラートとして画面上に通知。
+* **リソースインベントリ:** 稼働中のAWSリソースとステータスを一覧表示。
+
+## ロードマップ
+* **[x] v1.0:** フルスタック MVP 開発とホスティング環境での公開
+* **[ ] v2.0:** AWS ネイティブ環境へのインフラ移行 (S3/CloudFront, ECS/App Runner, RDS)
+* **[ ] v2.1:** AWS Cost Explorer API を用いたデータ取得の自動化
+* 
 ## データベース設計（ER図）
-
 本プロジェクトのデータベースはPostgreSQLを使用し、以下の設計としています。
-
 ```mermaid
 erDiagram
     m_aws_account ||--o{ t_resource_inventory : "1 : N"
