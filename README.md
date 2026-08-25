@@ -11,6 +11,19 @@ erDiagram
     m_aws_account ||--o{ t_cost_budget : "1 : N"
     m_aws_account ||--o{ t_cost_alert : "1 : N"
 
+    m_aws_service ||--o{ t_resource_inventory : "1 : N"
+    m_aws_service ||--o{ t_daily_cost : "1 : N"
+    m_aws_service ||--o{ t_cost_alert : "1 : N"
+
+    m_aws_service {
+        CHARACTER service_code PK "サービスコード"
+        CHARACTER service_name "サービス名"
+        CHARACTER category "カテゴリ"
+        TIMESTAMP ins_dttm "作成日時"
+        CHARACTER up_empcd "更新者"
+        TIMESTAMP up_dttm "更新日時"
+    }
+
     m_aws_account {
         VARCHAR account_id PK "AWSアカウントID"
         VARCHAR account_name "アカウント名"
@@ -22,7 +35,7 @@ erDiagram
     t_resource_inventory {
         VARCHAR resource_id PK "リソースID"
         VARCHAR account_id FK "AWSアカウントID"
-        VARCHAR service_code "サービスコード"
+        CHARACTER service_code FK "サービスコード"
         VARCHAR resource_name "リソース名"
         VARCHAR resource_arn "リソースARN"
         VARCHAR resource_type "リソース種別"
@@ -37,7 +50,7 @@ erDiagram
     t_daily_cost {
         BIGINT id PK "ID"
         VARCHAR account_id FK "AWSアカウントID"
-        VARCHAR service_code "サービスコード"
+        CHARACTER service_code FK "サービスコード"
         DATE target_date "対象日付"
         NUMERIC cost_amount_jpy "コスト(JPY)"
         NUMERIC cost_amount_usd "コスト(USD)"
@@ -65,7 +78,7 @@ erDiagram
     t_cost_alert {
         BIGINT id PK "アラートID"
         VARCHAR account_id FK "AWSアカウントID"
-        VARCHAR service_code "サービスコード"
+        CHARACTER service_code FK "サービスコード"
         VARCHAR alert_type "アラート種別"
         NUMERIC threshold_value "判定時閾値"
         NUMERIC actual_value "実績値"
