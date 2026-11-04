@@ -11,7 +11,7 @@ AWS 環境におけるクラウドリソースと利用コストを可視化・�
 **AWS ネイティブ環境（S3, CloudFront, EC2, RDS）** へのフルスタック移行を完了し、本番運用を行っています。
 
 ### 📸 スクリーンショット
-<img width="933" height="1283" alt="Image" src="https://github.com/user-attachments/assets/3340edb6-5793-4ec8-a72a-2f80ce9e1725" />
+<img width="981" height="1256" alt="Image" src="https://github.com/user-attachments/assets/d8daba30-3085-4811-aceb-b24bb012a2c9" />
 
 ### 技術スタック
 - **フロントエンド:** React, Vite, Recharts (Amazon S3 + CloudFront にて配信)
