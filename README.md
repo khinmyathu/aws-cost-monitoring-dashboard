@@ -113,20 +113,6 @@ erDiagram
         TIMESTAMP up_dttm "更新日時"
     }
 
-    t_resource_inventory {
-        VARCHAR resource_id PK "リソースID"
-        VARCHAR account_id FK "AWSアカウントID"
-        VARCHAR service_code FK "サービスコード"
-        VARCHAR resource_name "リソース名"
-        VARCHAR resource_arn "リソースARN"
-        VARCHAR resource_type "リソース種別"
-        VARCHAR region "リージョン"
-        VARCHAR status "ステータス"
-        TIMESTAMP last_checked_dttm "最終確認日時"
-        TIMESTAMP ins_dttm "作成日時"
-        VARCHAR up_empcd "更新者"
-        TIMESTAMP up_dttm "更新日時"
-    }
 ```
 
 ---
