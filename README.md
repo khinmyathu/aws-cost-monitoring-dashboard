@@ -1,16 +1,17 @@
 # AWS FinOps & Cost Monitoring Dashboard
 
-[日本語](#日本語) | [English](#english)
+[🇯🇵 日本語](#japanese) | [🇺🇸 English](#english)
 
 ---
 
+<span id="japanese"></span>
 ## 日本語
 
 AWS 環境におけるクラウドリソースと利用コストを可視化・管理するための FinOps ダッシュボードアプリケーションです。
 **AWS ネイティブ環境（S3, CloudFront, EC2, RDS）** へのフルスタック移行を完了し、本番運用を行っています。
 
 ### 📸 スクリーンショット
-<img width="933" height="1283" alt="Image" src="[https://github.com/user-attachments/assets/3340edb6-5793-4ec8-a72a-2f80ce9e1725](https://github.com/user-attachments/assets/3340edb6-5793-4ec8-a72a-2f80ce9e1725)" />
+<img width="933" height="1283" alt="Image" src="https://github.com/user-attachments/assets/3340edb6-5793-4ec8-a72a-2f80ce9e1725" />
 
 ### 技術スタック
 - **フロントエンド:** React, Vite, Recharts (Amazon S3 + CloudFront にて配信)
@@ -111,3 +112,38 @@ erDiagram
         VARCHAR up_empcd "更新者"
         TIMESTAMP up_dttm "更新日時"
     }
+```
+
+---
+
+<span id="english"></span>
+## English
+
+A cloud cost visualization and FinOps monitoring dashboard application built with **React**, **Spring Boot 3**, and **PostgreSQL**, deployed entirely on **AWS Cloud Infrastructure**.
+
+### Architecture & Tech Stack
+- **Frontend**: React (Vite), Recharts — Hosted on **Amazon S3** + **Amazon CloudFront**
+- **Backend**: Java 17, Spring Boot 3, Spring Data JPA (Hibernate) — Deployed on **Amazon EC2** (Public Subnet)
+- **Database**: PostgreSQL 18 — Hosted on **Amazon RDS** (Isolated in Private Subnet)
+- **DNS & SSL**: Amazon Route 53 + AWS Certificate Manager (ACM)
+- **Security & Ops**: AWS Systems Manager (SSM Session Manager), VPC network segmentation, environment variables injection for credentials
+
+### Key Features
+- **Cost Analytics**: Visualizes daily and monthly AWS usage cost breakdown by service.
+- **Budget Monitoring**: Tracks budget thresholds per account/service.
+- **Alert Detection & Resolution**: Detects threshold violations and allows in-app alert status resolution.
+
+### Roadmap
+- [x] **v1.0:** Full-stack MVP development & deployment on hosting platforms (Render / Vercel)
+- [x] **v2.0:** Full infrastructure migration to native AWS (S3/CloudFront, EC2, RDS, Route 53)
+- [ ] **v2.1:** Automated cost ingestion via AWS Cost Explorer API
+
+### 🔌 UI to API Mapping
+
+| UI Component | HTTP | Endpoint | Data Handled |
+| :--- | :--- | :--- | :--- |
+| **Service Daily Costs & Breakdown** | `GET` | `/api/v1/daily-costs` | `serviceCode`, `costAmountUsd` |
+| **AWS Accounts List** | `GET` | `/api/v1/accounts` | `accountId`, `accountName` |
+| **Monthly Budget** | `GET` | `/api/v1/budgets` | `budgetName`, `budgetAmount`, `warningThreshold` |
+| **Alerts (Open)** | `GET` | `/api/v1/alerts?status=OPEN` | `serviceCode`, `actualValue`, `thresholdValue` |
+| **Resolve Alert** | `PUT` | `/api/v1/alerts/{id}/resolve` | Updates status to `RESOLVED` |
