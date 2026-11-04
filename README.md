@@ -47,9 +47,21 @@ erDiagram
     m_aws_account ||--o{ t_daily_cost : "1 : N"
     m_aws_account ||--o{ t_cost_budget : "1 : N"
     m_aws_account ||--o{ t_cost_alert : "1 : N"
+    m_aws_account ||--o{ t_resource_inventory : "1 : N"
 
     m_aws_service ||--o{ t_daily_cost : "1 : N"
-    m_aws_service ||--o{ t_cost_alert : "1 : N"
+    m_aws_service ||--o{ t_resource_inventory : "1 : N"
+
+    t_cost_budget ||--o{ t_cost_alert : "1 : N (FK)"
+
+    m_aws_account {
+        CHARACTER account_id PK "アカウントID"
+        CHARACTER account_name "アカウント名"
+        NUMERIC env_type "環境区分"
+        TIMESTAMP ins_dttm "作成日時"
+        CHARACTER up_empcd "更新者"
+        TIMESTAMP up_dttm "更新日時"
+    }
 
     m_aws_service {
         CHARACTER service_code PK "サービスコード"
@@ -60,24 +72,16 @@ erDiagram
         TIMESTAMP up_dttm "更新日時"
     }
 
-    m_aws_account {
-        VARCHAR account_id PK "AWSアカウントID"
-        VARCHAR account_name "アカウント名"
-        TIMESTAMP ins_dttm "作成日時"
-        TIMESTAMP up_dttm "更新日時"
-        VARCHAR up_empcd "更新者"
-    }
-
     t_daily_cost {
-        BIGINT id PK "ID"
-        VARCHAR account_id FK "AWSアカウントID"
+        NUMERIC id PK "サロゲートキー"
+        DATE target_date "利用日"
+        CHARACTER account_id FK "AWSアカウントID"
         CHARACTER service_code FK "サービスコード"
-        DATE target_date "対象日付"
-        NUMERIC cost_amount_jpy "コスト(JPY)"
-        NUMERIC cost_amount_usd "コスト(USD)"
+        NUMERIC cost_amount_usd "利用料金(USD)"
+        NUMERIC cost_amount_jpy "利用料金(円換算)"
         TIMESTAMP ins_dttm "作成日時"
+        CHARACTER up_empcd "更新者"
         TIMESTAMP up_dttm "更新日時"
-        VARCHAR up_empcd "更新者"
     }
 
     t_cost_budget {
@@ -87,8 +91,8 @@ erDiagram
         VARCHAR period_type "期間種別"
         NUMERIC budget_amount "予算額"
         VARCHAR currency "通貨"
-        DATE start_date "開始日"
-        DATE end_date "終了日"
+        DATE start_date "適用開始日"
+        DATE end_date "適用終了日"
         NUMERIC warning_threshold "警告閾値(%)"
         NUMERIC critical_threshold "危険閾値(%)"
         TIMESTAMP ins_dttm "作成日時"
@@ -99,15 +103,26 @@ erDiagram
     t_cost_alert {
         BIGINT id PK "アラートID"
         VARCHAR account_id FK "AWSアカウントID"
-        CHARACTER service_code FK "サービスコード"
-        BIGINT budget_id "紐づく予算ID"
-        VARCHAR target_month "対象月"
+        BIGINT budget_id FK "対象予算ID"
+        VARCHAR target_month "対象年月(YYYY-MM)"
         VARCHAR alert_type "アラート種別"
-        NUMERIC threshold_value "判定時閾値"
-        NUMERIC actual_value "実績値"
+        NUMERIC threshold_value "判定基準閾値額(USD)"
+        NUMERIC actual_value "月間利用実績額(USD)"
+        TIMESTAMP ins_dttm "作成日時"
+        VARCHAR up_empcd "更新者"
+        TIMESTAMP up_dttm "更新日時"
+    }
+
+    t_resource_inventory {
+        VARCHAR resource_id PK "リソースID"
+        VARCHAR account_id FK "AWSアカウントID"
+        VARCHAR service_code FK "サービスコード"
+        VARCHAR resource_name "リソース名"
+        VARCHAR resource_arn "リソースARN"
+        VARCHAR resource_type "リソース種別"
+        VARCHAR region "リージョン"
         VARCHAR status "ステータス"
-        TIMESTAMP detected_dttm "検知日時"
-        TIMESTAMP resolved_dttm "解消日時"
+        TIMESTAMP last_checked_dttm "最終確認日時"
         TIMESTAMP ins_dttm "作成日時"
         VARCHAR up_empcd "更新者"
         TIMESTAMP up_dttm "更新日時"
