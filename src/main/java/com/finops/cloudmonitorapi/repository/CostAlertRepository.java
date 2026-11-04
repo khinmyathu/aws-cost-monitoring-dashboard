@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface CostAlertRepository extends JpaRepository<CostAlert, Long> {
     List<CostAlert> findByAccountId(String accountId);
-    List<CostAlert> findByStatus(String status);
+    List<CostAlert> findByAccountIdAndTargetMonth(String accountId, String targetMonth);
 }

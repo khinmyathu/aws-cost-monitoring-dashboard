@@ -5,7 +5,7 @@ spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/cloud_monitor_db}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:dummy_password_for_local}
     driver-class-name: org.postgresql.Driver
 
   sql:
@@ -17,7 +17,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    defer-datasource-initialization: true # ★ここを追加！(JPAのテーブル生成後にdata.sqlを実行する)
+    defer-datasource-initialization: true
     properties:
       hibernate:
         format_sql: true

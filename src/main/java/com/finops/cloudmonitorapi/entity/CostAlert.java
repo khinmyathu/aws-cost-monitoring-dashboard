@@ -17,8 +17,11 @@ public class CostAlert {
     @Column(name = "account_id")
     private String accountId;
 
-    @Column(name = "service_code")
-    private String serviceCode;
+    @Column(name = "budget_id")
+    private Long budgetId;
+
+    @Column(name = "target_month")
+    private String targetMonth;
 
     @Column(name = "alert_type")
     private String alertType;
@@ -28,15 +31,6 @@ public class CostAlert {
 
     @Column(name = "actual_value")
     private BigDecimal actualValue;
-
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "detected_dttm")
-    private LocalDateTime detectedDttm;
-
-    @Column(name = "resolved_dttm")
-    private LocalDateTime resolvedDttm;
 
     @Column(name = "ins_dttm")
     private LocalDateTime insDttm;

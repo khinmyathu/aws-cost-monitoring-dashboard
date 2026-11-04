@@ -44,12 +44,14 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 --------------------------------------------------
--- 5. アラートデータの拡充 (OPENとRESOLVEDを混在)
+-- 5. アラートデータ（月間全体監視・新構造対応）
 --------------------------------------------------
+DELETE FROM monitor.t_cost_alert;
+
 INSERT INTO monitor.t_cost_alert 
-(id, account_id, service_code, alert_type, threshold_value, actual_value, status, detected_dttm, ins_dttm, up_dttm, up_empcd) 
+(id, account_id, budget_id, target_month, alert_type, threshold_value, actual_value, ins_dttm, up_dttm, up_empcd) 
 VALUES 
-(1, '123456789012', 'AmazonRDS', 'BUDGET_EXCEEDED', 400.00, 420.50, 'OPEN', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
-(2, '987654321098', 'AmazonEC2', 'ANOMALY_DETECTION', 10.00, 25.00, 'OPEN', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
-(3, '123456789012', 'AWSLambda', 'BUDGET_EXCEEDED', 5.00, 6.20, 'RESOLVED', CURRENT_TIMESTAMP - INTERVAL '2 days', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM')
-ON CONFLICT (id) DO NOTHING;
+-- actual_value を日次合計と同じ 878.10 に修正
+(1, '123456789012', 1, '2026-10', 'WARNING', 800.00, 878.10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM'),
+(2, '987654321098', 2, '2026-10', 'WARNING', 140.00, 170.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'SYSTEM')
+ON CONFLICT (id) DO UPDATE SET actual_value = EXCLUDED.actual_value;

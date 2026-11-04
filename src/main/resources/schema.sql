@@ -77,67 +77,36 @@ COMMENT ON COLUMN monitor.m_aws_service.up_empcd
 COMMENT ON COLUMN monitor.m_aws_service.up_dttm
     IS '更新日時';
 
--- Table: monitor.t_cost_alert
-
--- DROP TABLE IF EXISTS monitor.t_cost_alert;
+DROP TABLE IF EXISTS monitor.t_cost_alert;
 
 CREATE TABLE IF NOT EXISTS monitor.t_cost_alert
 (
     id bigint NOT NULL,
-    account_id character varying(64) COLLATE pg_catalog."default",
-    service_code character varying(64) COLLATE pg_catalog."default",
-    alert_type character varying(32) COLLATE pg_catalog."default",
-    threshold_value numeric(15,2),
-    actual_value numeric(15,2),
-    status character varying(32) COLLATE pg_catalog."default",
-    detected_dttm timestamp(3) without time zone,
-    resolved_dttm timestamp(3) without time zone,
+    account_id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    budget_id bigint,
+    target_month character varying(7) NOT NULL,
+    alert_type character varying(255) COLLATE pg_catalog."default",
+    threshold_value numeric(38,2),
+    actual_value numeric(38,2),
     ins_dttm timestamp(3) without time zone DEFAULT now(),
-    up_empcd character varying(12) COLLATE pg_catalog."default",
+    up_empcd character varying(255) COLLATE pg_catalog."default",
     up_dttm timestamp(3) without time zone DEFAULT now(),
-    CONSTRAINT t_cost_alert_pk PRIMARY KEY (id)
-)
+    CONSTRAINT t_cost_alert_pk PRIMARY KEY (id),
+    CONSTRAINT fk_cost_alert_budget FOREIGN KEY (budget_id) 
+        REFERENCES monitor.t_cost_budget (id) ON DELETE SET NULL
+);
 
-TABLESPACE pg_default;
-
-COMMENT ON TABLE monitor.t_cost_alert
-    IS 'コストアラート履歴';
-
-COMMENT ON COLUMN monitor.t_cost_alert.id
-    IS 'アラートID';
-
-COMMENT ON COLUMN monitor.t_cost_alert.account_id
-    IS 'AWSアカウントID';
-
-COMMENT ON COLUMN monitor.t_cost_alert.service_code
-    IS 'サービスコード';
-
-COMMENT ON COLUMN monitor.t_cost_alert.alert_type
-    IS 'アラート種別 (例: WARNING, CRITICAL)';
-
-COMMENT ON COLUMN monitor.t_cost_alert.threshold_value
-    IS '判定時閾値';
-
-COMMENT ON COLUMN monitor.t_cost_alert.actual_value
-    IS '発生時実績値';
-
-COMMENT ON COLUMN monitor.t_cost_alert.status
-    IS 'ステータス (例: OPEN, RESOLVED, IGNORED)';
-
-COMMENT ON COLUMN monitor.t_cost_alert.detected_dttm
-    IS '検知日時';
-
-COMMENT ON COLUMN monitor.t_cost_alert.resolved_dttm
-    IS '解消日時';
-
-COMMENT ON COLUMN monitor.t_cost_alert.ins_dttm
-    IS '作成日時';
-
-COMMENT ON COLUMN monitor.t_cost_alert.up_empcd
-    IS '更新者';
-
-COMMENT ON COLUMN monitor.t_cost_alert.up_dttm
-    IS '更新日時';
+COMMENT ON TABLE monitor.t_cost_alert IS '月次コストアラート（表示確認専用）';
+COMMENT ON COLUMN monitor.t_cost_alert.id IS 'アラートID';
+COMMENT ON COLUMN monitor.t_cost_alert.account_id IS 'AWSアカウントID';
+COMMENT ON COLUMN monitor.t_cost_alert.budget_id IS '対象予算ID';
+COMMENT ON COLUMN monitor.t_cost_alert.target_month IS '対象年月 (YYYY-MM)';
+COMMENT ON COLUMN monitor.t_cost_alert.alert_type IS 'アラート種別 (WARNING, CRITICAL)';
+COMMENT ON COLUMN monitor.t_cost_alert.threshold_value IS '判定基準閾値額 (USD)';
+COMMENT ON COLUMN monitor.t_cost_alert.actual_value IS '月間利用実績額 (USD)';
+COMMENT ON COLUMN monitor.t_cost_alert.ins_dttm IS 'レコード作成日時';
+COMMENT ON COLUMN monitor.t_cost_alert.up_empcd IS '更新者';
+COMMENT ON COLUMN monitor.t_cost_alert.up_dttm IS '更新日時';
 
 -- Table: monitor.t_cost_budget
 
