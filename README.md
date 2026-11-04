@@ -47,10 +47,8 @@ erDiagram
     m_aws_account ||--o{ t_daily_cost : "1 : N"
     m_aws_account ||--o{ t_cost_budget : "1 : N"
     m_aws_account ||--o{ t_cost_alert : "1 : N"
-    m_aws_account ||--o{ t_resource_inventory : "1 : N"
 
     m_aws_service ||--o{ t_daily_cost : "1 : N"
-    m_aws_service ||--o{ t_resource_inventory : "1 : N"
 
     t_cost_budget ||--o{ t_cost_alert : "1 : N (FK)"
 
